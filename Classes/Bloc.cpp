@@ -55,16 +55,21 @@ void Bloc::BlockDisp() const
 	const int SCREEN_HEIGHT = 480;
 	SDL_Window* gWindow = NULL;
 	SDL_Surface* gScreenSurface = NULL;
-	SDL_Surface* gHelloWorld = NULL;
-
+	SDL_Surface* gGreenCube = NULL;
+	SDL_Surface* gBlueCube = NULL;
+	SDL_Rect posGreen;
+	posGreen.x = 50;
+	posGreen.y = 50;
 	//Create window
 	gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	//Get window surface
 	gScreenSurface = SDL_GetWindowSurface(gWindow);
 	//Load splash image
-	gHelloWorld = SDL_LoadBMP("Carree_Vert.bmp");
+	gGreenCube = SDL_LoadBMP("Carree_Vert.bmp");
+	gBlueCube = SDL_LoadBMP("Carree_Bleu.bmp");
 	//Apply the image
-	SDL_BlitSurface(gHelloWorld, NULL, gScreenSurface, NULL);
+	SDL_BlitSurface(gGreenCube, NULL, gScreenSurface, &posGreen);
+	SDL_BlitSurface(gBlueCube, NULL, gScreenSurface, NULL);
 	//Update the surface
 	SDL_UpdateWindowSurface(gWindow);
 	//Wait five seconds
