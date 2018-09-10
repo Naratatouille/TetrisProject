@@ -1,6 +1,7 @@
 #ifndef BLOC_H
 #define BLOC_H
 
+#include "Constantes.h"
 #include <SDL.h>
 #include <stdio.h>
 #include <iostream>
@@ -17,11 +18,15 @@ public:
 
 	// Get des propriétés de la classe
 
-	int getWidth();
-	int getHeight();
-	int getColor();
-	int getXposition();
-	int getYposition();
+	int getWidth() const;
+	int getHeight() const;
+	int getColor() const;
+	int getXposition() const;
+	int getYposition() const;
+
+	void setColor(int _c);
+	void setXposition(int _x);
+	void setYposition(int _y);
 
 	void BlockDisp() const;					// Affichage d'un bloc
 
