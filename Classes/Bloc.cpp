@@ -24,55 +24,76 @@ Bloc::~Bloc()
 }
 
 
-int Bloc::getWidth()
+int Bloc::getWidth() const
 {
 	return width;
 }
 
-int Bloc::getHeight()
+int Bloc::getHeight() const
 {
 	return height;
 }
 
-int Bloc::getColor()
+int Bloc::getColor() const
 {
 	return color;
 }
 
-int Bloc::getXposition()
+int Bloc::getXposition() const
 {
 	return xposition;
 }
 
-int Bloc::getYposition()
+int Bloc::getYposition() const
 {
 	return yposition;
 }
 
+void Bloc::setColor(int _c)
+{
+	color = _c;
+}
+
+void Bloc::setXposition(int _x)
+{
+	if (_x >= 0 && _x <= SCREEN_WIDTH)
+		xposition = _x;
+	else
+		std::cout << "Out of range" << std::endl;
+}
+
+void Bloc::setYposition(int _y)
+{
+	if (_y >= 0 && _y <= SCREEN_HEIGHT)
+		xposition = _y;
+	else
+		std::cout << "Out of range" << std::endl;
+}
+
 void Bloc::BlockDisp() const
 {
-	const int SCREEN_WIDTH = 640;
-	const int SCREEN_HEIGHT = 480;
+
 	SDL_Window* gWindow = NULL;
 	SDL_Surface* gScreenSurface = NULL;
 	SDL_Surface* gGreenCube = NULL;
 	SDL_Surface* gBlueCube = NULL;
 	SDL_Rect posGreen;
-	posGreen.x = 50;
-	posGreen.y = 50;
-	//Create window
+	posGreen.x = SCREEN_WIDTH/2;
+	posGreen.y = SCREEN_HEIGHT/2;
+	
+	// Creer fenetre
 	gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-	//Get window surface
+	// Creer surface de fenetre
 	gScreenSurface = SDL_GetWindowSurface(gWindow);
-	//Load splash image
+	// Charger les image
 	gGreenCube = SDL_LoadBMP("Carree_Vert.bmp");
 	gBlueCube = SDL_LoadBMP("Carree_Bleu.bmp");
-	//Apply the image
+	// Appliquer les images
 	SDL_BlitSurface(gGreenCube, NULL, gScreenSurface, &posGreen);
 	SDL_BlitSurface(gBlueCube, NULL, gScreenSurface, NULL);
-	//Update the surface
+	// Mettre à jour la surface
 	SDL_UpdateWindowSurface(gWindow);
-	//Wait five seconds
+	// Attendre 5 secondes afin de fermer la fentetre
 	SDL_Delay(5000);
 }
 
@@ -84,7 +105,9 @@ void Test_Bloc()
 	std::cout << "Couleur bloc 1 : " << bloc1.getColor() << std::endl;
 	std::cout << "Largeur bloc 1 : " << bloc1.getWidth() << std::endl;
 	std::cout << "Hauteur bloc 1 : " << bloc1.getHeight() << std::endl;
-	std::cout << "Hauteur bloc 2 : " << bloc2.getYposition() << std::endl;
-	std::cout << "Hauteur bloc 3 : " << bloc3.getXposition() << std::endl;
+	std::cout << "Position en y bloc 2 : " << bloc2.getYposition() << std::endl;
+	std::cout << "Position en x bloc 3 : " << bloc3.getXposition() << std::endl;
+	bloc3.setXposition(70);
+	std::cout << "Position en x bloc 3 apres changement : " << bloc3.getXposition() << std::endl;
 	bloc1.BlockDisp();
 }
