@@ -31,7 +31,7 @@ SDL_Window* gWindow = NULL;
 
 
 
-bool Texturer::loadfromfile(std::string path)
+bool Texturer::loadfromfile(std::string path, std::vector<SDL_Rect>& posimages)
 {
 	//Get rid of preexisting texture
 	free();
