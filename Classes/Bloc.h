@@ -2,9 +2,6 @@
 #define BLOC_H
 
 #include "Constantes.h"
-#include <SDL.h>
-#include <stdio.h>
-#include <iostream>
 
 class Bloc
 {
@@ -28,7 +25,7 @@ public:
 	void setXposition(int _x);
 	void setYposition(int _y);
 
-	void BlockDisp() const;					// Affichage d'un bloc
+	void BlockDisp(int _x, int _y) const;					// Affichage d'un bloc
 
 private:
 	int width;								// Largeur d'un bloc
