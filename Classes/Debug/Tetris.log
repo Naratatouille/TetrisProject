@@ -1,0 +1,10 @@
+﻿  main.cpp
+  Texture.cpp
+c:\users\hugo d\documents\ensisa\c++\c++\tetris\tetris\texture.cpp(169): error C2660: 'Texturer::loadfromfile' : la fonction ne prend pas 1 arguments
+c:\users\hugo d\documents\ensisa\c++\c++\tetris\tetris\texture.cpp(176): error C2660: 'Texturer::loadfromfile' : la fonction ne prend pas 1 arguments
+c:\users\hugo d\documents\ensisa\c++\c++\tetris\tetris\texture.cpp(182): error C2660: 'Texturer::loadfromfile' : la fonction ne prend pas 1 arguments
+  Génération de code en cours...
+  Compilation en cours...
+  Tetromino.cpp
+  Bloc.cpp
+  Génération de code en cours...
