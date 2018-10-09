@@ -94,6 +94,47 @@ bool Texturer::loadfromfile(std::vector<Texturer*> &tabText,StructVar &sv,const 
 	return false;
 }
 
+bool Texturer::loadfromrenderedtext(std::vector<Texturer*>& tabText, StructVar & sv, const std::string & textureText, SDL_Color textcolor, unsigned int x, unsigned int y, unsigned int w, unsigned int h)
+{
+	
+	SDL_Texture* newText = NULL;
+	SDL_Surface* textSurface = TTF_RenderText_Solid(sv.gFont, textureText.c_str(), textcolor);
+	SDL_Rect posit;
+	posit.x = x;
+	posit.y = y;
+
+	if (textSurface == NULL)
+	{
+		printf("Unable to render text surface ! SDL_ttf ERROR : %s \n", TTF_GetError());
+	}
+	else
+	{
+		newText = SDL_CreateTextureFromSurface(sv.gRenderer, textSurface);
+		if (newText == NULL)
+		{
+			printf("Unable to create texture fro rendered text ! SDL_Error : %s \n", SDL_GetError());
+
+		}
+		else
+		{
+			if (w == 0 && h == 0)
+			{
+				posit.w = textSurface->w;
+				posit.h = textSurface->h;
+			}
+			else
+			{
+				posit.w = w;
+				posit.h = h;
+			}
+		}
+
+		SDL_FreeSurface(textSurface);
+	}
+	tabText.push_back(new Texturer(newText, textureText, posit));
+	return false;
+}
+
 
 void Texturer::render(int x, int y,const std::string &nameText, StructVar &sv)
 {

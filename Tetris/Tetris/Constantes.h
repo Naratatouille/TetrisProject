@@ -13,6 +13,8 @@ const unsigned int TAILLE_CARREAU = 32;
 const unsigned int HAUTEUR_GRILLE = 24;
 const unsigned int LARGEUR_GRILLE = 12;
 
+
+
 enum { blue, cyan, yellow, orange, red, green, purple };
 enum {I, O, T, L, J, Z, S};
 enum {Menu,NewGame,Score};
@@ -42,11 +44,13 @@ struct StructVar{  // Structure permettant d'utiliser des variables si appelé
 	SDL_Window* gWindow = NULL;
 	//The window renderer
 	SDL_Renderer* gRenderer = NULL;
+	TTF_Font *gFont = NULL;
 
 	std::vector<carreau> grille;
 	std::vector<Texturer*> tabText;
 
 };
+
 
 
 #endif 

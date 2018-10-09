@@ -5,6 +5,8 @@
 #include "Texture.h"
 #include "Game.h"
 //bool loadMedia(StructVar &sv);
+SDL_Color coucoutest = { 128,128,128 };
+
 
 void initGrille(std::vector<carreau>& grille);
 void initGrille(std::vector<carreau>& grille) 
@@ -33,27 +35,42 @@ void initGrille(std::vector<carreau>& grille)
 void initImages(std::vector<Texturer*> &tabText, StructVar &sv);
 void initImages(std::vector<Texturer*> &tabText, StructVar &sv)
 {
-	Texturer::loadfromfile(tabText,sv,(std::string)("Backgroundtest.png"), 0, 0,SCREEN_WIDTH,SCREEN_HEIGHT);
+	Texturer::loadfromfile(tabText,sv,(std::string)("Background.png"), 0, 0,SCREEN_WIDTH,SCREEN_HEIGHT);
 	Texturer::loadfromfile(tabText, sv, (std::string)("Carre_Elem.png"), 0, 0);
 
 	//Texturer::loadfromfile(tabText, sv, (std::string)("NewGame.png"), 200, 140);
 	//Texturer::loadfromfile(tabText, sv, (std::string)("Scores.png"), 200, 250);
 }
 
+void initText(std::vector<Texturer*> &tabText, StructVar &sv);
+void initText(std::vector<Texturer*> &tabText, StructVar &sv)
+{
+
+	Texturer::loadfromrenderedtext(tabText, sv, (std::string)("NEW GAME : Press (N)"),coucoutest,0,0);
+	Texturer::loadfromrenderedtext(tabText, sv, (std::string)("SCORES : Press (C)"), coucoutest, 0, 0);
+}
+
 
 int main(int argc, char* argv[]) 
 {
+	//Initialize SDL_ttf
+	if (TTF_Init() == -1)
+	{
+		printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
 
+	}
 	int Selection=0;
 	StructVar  sv;  // instanciation de la structure 
 	initGrille(sv.grille);
-	
+
 
 	// Creer fenetre
 	sv.gWindow = SDL_CreateWindow("SDL Tutorial", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	sv.gRenderer = SDL_CreateRenderer(sv.gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);// presentvsync : permet de synchroniser frequence de la boucle avec taux de raffraichissement de l'ecran
+	sv.gFont = TTF_OpenFont("arial.ttf", 40);
+	
 	initImages(sv.tabText, sv);	
-
+	initText(sv.tabText, sv);
 
 	bool quit = false;
 	//Event handler
@@ -104,8 +121,14 @@ int main(int argc, char* argv[])
 		{
 		case Menu:
 			SDL_RenderClear(sv.gRenderer);
-			for(unsigned int k = 0;k<sv.tabText.size();k++)
-				sv.tabText[k]->render(0, 0,(std::string)("Backgroundtest.png"),sv);
+			for (unsigned int k = 0; k < sv.tabText.size(); k++)
+			{
+				sv.tabText[k]->render(0, 0, (std::string)("Background.png"), sv);
+				sv.tabText[k]->render(50,(SCREEN_HEIGHT/2)-100, (std::string)("NEW GAME : Press (N)"), sv);
+				sv.tabText[k]->render(50, (SCREEN_HEIGHT / 2) + 100, (std::string)("SCORES : Press (C)"), sv);
+
+			}
+
 
 			SDL_RenderPresent(sv.gRenderer);
 			break;
@@ -123,7 +146,7 @@ int main(int argc, char* argv[])
 			}
 	
 			SDL_RenderPresent(sv.gRenderer);
-			
+			break;
 
 
 
@@ -147,8 +170,8 @@ int main(int argc, char* argv[])
 	//ScoreTexture.free();
 
 	//Quit SDL subsystems
+	TTF_Quit();
 	IMG_Quit();
-	SDL_Quit();
 	SDL_Quit();
 
 	//Test_Bloc();
