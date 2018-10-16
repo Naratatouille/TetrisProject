@@ -195,9 +195,7 @@ void Tetromino::TetroDisp(StructVar& sv) const
 
 		}
 
-		// Charger les image
-		//gGreenCube = SDL_LoadBMP("Carree_Vert.bmp");
-		//gBlueCube = SDL_LoadBMP("Carree_Bleu.bmp");
+
 		switch (type)
 		{
 		case I:

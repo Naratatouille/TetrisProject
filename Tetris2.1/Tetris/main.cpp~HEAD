@@ -2,7 +2,7 @@
 #include "Constantes.h"
 #include "Texture.h"
 #include "Game.h"
-//bool loadMedia(StructVar &sv);
+
 SDL_Color coucoutest = { 128,128,128 };
 
 
@@ -64,6 +64,7 @@ int main(int argc, char* argv[])
 		printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
 
 	}
+
 	int Selection = 0;
 	StructVar  sv;  // instanciation de la structure 
 	initGrille(sv.grille);
@@ -105,21 +106,18 @@ int main(int argc, char* argv[])
 					break;
 
 				case SDLK_UP:
-					//CurrentTexture2 = gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
-					//CurrentTexture = NewGameTexture;
-					//ajouter partie de texture
 					T2.initTetro(sv);
 					break;
 				case SDLK_DOWN:
-
+				/*
 					for (unsigned int i = 0; i < sv.tabText.size(); i++)
 					{
 						sv.tabText[i]->render(sv.grille[LARGEUR_GRILLE / 2][1].xpos, sv.grille[LARGEUR_GRILLE / 2][1].ypos, (std::string)("Carree_Bleu.bmp"), sv);
 					}
+					*/
 
 					SDL_RenderPresent(sv.gRenderer);
 					std::cout << "test" << std::endl;
-					//pareil
 					break;
 
 				}
@@ -168,12 +166,6 @@ int main(int argc, char* argv[])
 					}
 				}
 			}
-/*
-			for (unsigned int i = 0; i < sv.tabText.size(); i++)
-			{
-				sv.tabText[i]->render(sv.grille[LARGEUR_GRILLE / 2][0].xpos, sv.grille[LARGEUR_GRILLE / 2][0].ypos, (std::string)("Carree_Bleu.bmp"), sv);
-			}*/
-
 			SDL_RenderPresent(sv.gRenderer);
 			break;
 		}
@@ -188,20 +180,12 @@ int main(int argc, char* argv[])
 	SDL_DestroyRenderer(sv.gRenderer);
 	sv.gRenderer = NULL;  // on peut mettre nullptr au lieu de NULL-> nullptr juste plus recent
 
-
-	//Quit SDL subsystems
-	//Free loaded images
-	//NewGameTexture.free();
-	//BackgroundTexture.free();
-	//ScoreTexture.free();
-
 	//Quit SDL subsystems
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
 
-	//Test_Bloc();
-	//Test_Forme();
+
 	return 0;
 }
 
