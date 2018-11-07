@@ -1,0 +1,17 @@
+﻿  Entity.cpp
+c:\users\jbeyr\desktop\pac-man-master - copie\pac-man\entity.cpp(51): warning C4244: '=' : conversion de 'unsigned int' en 'Uint8', perte possible de données
+c:\users\jbeyr\desktop\pac-man-master - copie\pac-man\entity.cpp(65): warning C4244: '=' : conversion de 'unsigned int' en 'Uint8', perte possible de données
+c:\users\jbeyr\desktop\pac-man-master - copie\pac-man\entity.cpp(71): warning C4244: '=' : conversion de 'unsigned int' en 'Uint8', perte possible de données
+c:\users\jbeyr\desktop\pac-man-master - copie\pac-man\entity.cpp(122): warning C4100: 'direction' : paramètre formel non référencé
+  main.cpp
+c:\users\jbeyr\desktop\pac-man-master - copie\pac-man\main.cpp(37): warning C4100: 'argv' : paramètre formel non référencé
+c:\users\jbeyr\desktop\pac-man-master - copie\pac-man\main.cpp(37): warning C4100: 'argc' : paramètre formel non référencé
+c:\users\jbeyr\desktop\pac-man-master - copie\pac-man\main.cpp(76): warning C4189: 'SDL_EnableUNICODE' : variable locale initialisée mais non référencée
+  IHM.cpp
+  Texture.cpp
+c:\users\jbeyr\desktop\pac-man-master - copie\pac-man\texture.cpp(428): warning C4238: extension non standard utilisée : classe rvalue utilisée comme lvalue
+c:\users\jbeyr\desktop\pac-man-master - copie\pac-man\texture.cpp(430): warning C4238: extension non standard utilisée : classe rvalue utilisée comme lvalue
+c:\users\jbeyr\desktop\pac-man-master - copie\pac-man\texture.cpp(443): warning C4238: extension non standard utilisée : classe rvalue utilisée comme lvalue
+c:\users\jbeyr\desktop\pac-man-master - copie\pac-man\texture.cpp(445): warning C4238: extension non standard utilisée : classe rvalue utilisée comme lvalue
+  Génération de code en cours...
+  Pac-Man.vcxproj -> C:\Users\jbeyr\Desktop\Pac-Man-master - Copie\Debug\Pac-Man.exe

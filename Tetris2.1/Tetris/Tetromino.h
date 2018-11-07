@@ -12,14 +12,8 @@ public:
 	~Tetromino();
 
 	void initTetro(StructVar& sv);
-	void TetroDisp(StructVar& sv) const;					// Affichage d'un bloc
 
 private:
-
-/*	Bloc A;
-	Bloc B;
-	Bloc C;
-	Bloc D;*/
 
 	int color;
 	int type;

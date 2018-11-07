@@ -1,13 +1,5 @@
 #include "Texture.h"
 #include "Constantes.h"
-//The surface contained by the window
-
-
-
-
-
-//Loads media
-
 
 //Frees media and shuts down SDL
 void close(StructVar &sv);
@@ -159,50 +151,9 @@ int Texturer::getHeight()
 }
 
 
-
-
-/*bool loadMedia(StructVar &sv)
-{
-	//Loading success flag
-	bool success = true;
-	if (!gKeyPressSurfaces[KEY_PRESS_SURFACE_UP].loadfromfile((std::string)("Selected.png"),sv))
-	{
-		printf("Failed to load Selected.png");
-		success = false;
-	}
-	if (!gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN].loadfromfile((std::string)("Selected.png"),sv))
-	{
-		printf("Failed to load Selected.png");
-		success = false;
-	}
-
-	//Load Foo' texture
-	if (!NewGameTexture.loadfromfile((std::string)("NewGame.png"),sv))
-	{
-		printf("Failed to load NewGame.png!\n");
-		success = false;
-	}
-
-	//Load background texture
-	if (!BackgroundTexture.loadfromfile((std::string)("BackgroundTest.png"),sv))
-	{
-		printf("Failed to load background texture image!\n");
-		success = false;
-	}
-
-	if (!ScoreTexture.loadfromfile((std::string)("Scores.png"),sv))
-	{
-		printf("Failed to load Score.png! \n");
-		success = false;
-	}
-	return success;
-}*/
 void close(StructVar &sv)
 {
-	/*//Free loaded images
-	NewGameTexture.free();
-	BackgroundTexture.free();
-	ScoreTexture.free();*/
+
 
 	//Destroy window	
 	SDL_DestroyRenderer(sv.gRenderer);
@@ -214,82 +165,3 @@ void close(StructVar &sv)
 	IMG_Quit();
 	SDL_Quit();
 }
-
-/*void Texturer::playgame()
-{
-
-	//Start up SDL and create window
-	if (!init())
-	{
-		printf("Failed to initialize!\n");
-	}
-	else
-	{
-		//Load media
-		if (!)
-		{
-			printf("Failed to load media!\n");
-		}
-		else
-		{
-			//Main loop flag
-			bool quit = false;
-
-			//Event handler
-			SDL_Event e;
-
-			//While application is running
-			while (!quit)
-			{
-				//Handle events on queue
-				while (SDL_PollEvent(&e) != 0)
-				{
-					//User requests quit
-					if (e.type == SDL_QUIT)
-					{
-						quit = true;
-					}
-					else if (e.key.keysym.sym)
-					{
-	
-						switch (e.key.keysym.sym)
-						{
-						case SDLK_UP:
-							CurrentTexture = gKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
-							CurrentTexture2 = ScoreTexture;
-							break;
-
-						case SDLK_DOWN:
-							CurrentTexture2 = gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
-							CurrentTexture = NewGameTexture;
-							break;
-						}
-
-					}
-				}
-
-				//Clear screen
-				SDL_SetRenderDrawColor(sv.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-				SDL_RenderClear(sv.gRenderer);
-				//Render background texture to screen
-				BackgroundTexture.render(0, 0);
-
-				//Render NewGame to the screen
-				NewGameTexture.render(200, 140);
-				CurrentTexture.render(200, 140);
-				//Render Score to the screen
-				ScoreTexture.render(200, 250);
-
-				CurrentTexture2.render(200, 250);
-			
-				//Update screen
-				SDL_RenderPresent(sv.gRenderer);
-			}
-			BackgroundTexture.render(0, 0);
-			SDL_RenderPresent(gRenderer);
-		}
-	}
-
-	//Free resources and close SDL
-	close(&sv);
-}*/

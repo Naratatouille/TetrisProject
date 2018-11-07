@@ -2,7 +2,7 @@
 #include "Constantes.h"
 #include "Texture.h"
 #include "Game.h"
-//bool loadMedia(StructVar &sv);
+
 SDL_Color coucoutest = { 128,128,128 };
 
 
@@ -42,9 +42,6 @@ void initImages(std::vector<Texturer*> &tabText, StructVar &sv)
 	Texturer::loadfromfile(tabText, sv, (std::string)("Carree_Bleu.bmp"), 0, 0, TAILLE_CARREAU, TAILLE_CARREAU);
 	Texturer::loadfromfile(tabText, sv, (std::string)("Carree_Rouge.bmp"), 0, 0, TAILLE_CARREAU, TAILLE_CARREAU);
 	Texturer::loadfromfile(tabText, sv, (std::string)("Blue.png"), 0, 0,TAILLE_CARREAU, TAILLE_CARREAU);
-
-	//Texturer::loadfromfile(tabText, sv, (std::string)("NewGame.png"), 200, 140);
-	//Texturer::loadfromfile(tabText, sv, (std::string)("Scores.png"), 200, 250);
 }
 
 void initText(std::vector<Texturer*> &tabText, StructVar &sv);
@@ -64,13 +61,13 @@ int main(int argc, char* argv[])
 		printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
 
 	}
+	
 	int Selection = 0;
 	StructVar  sv;  // instanciation de la structure 
 	initGrille(sv.grille);
 
-
 	// Creer fenetre
-	sv.gWindow = SDL_CreateWindow("SDL Tutorial", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	sv.gWindow = SDL_CreateWindow("Tetris", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	sv.gRenderer = SDL_CreateRenderer(sv.gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);// presentvsync : permet de synchroniser frequence de la boucle avec taux de raffraichissement de l'ecran
 	sv.gFont = TTF_OpenFont("arial.ttf", 40);
 
@@ -80,7 +77,7 @@ int main(int argc, char* argv[])
 	bool quit = false;
 	//Event handler
 	SDL_Event e;
-	Tetromino T2;
+	Tetromino T1;
 	while (!quit) {
 
 		while (SDL_PollEvent(&e) != 0)
@@ -95,6 +92,15 @@ int main(int argc, char* argv[])
 					quit = true;
 					break;
 				case SDLK_SPACE:
+					
+					T1.initTetro(sv);
+					sv.tabForme.push_back(T1);
+
+					if (sv.tabForme.size() > 1)
+						sv.tabForme.pop_back();
+					else
+						std::cout << "j enleve" << std::endl;
+
 
 					break;
 				case SDLK_n:
@@ -105,30 +111,12 @@ int main(int argc, char* argv[])
 					break;
 
 				case SDLK_UP:
-					//CurrentTexture2 = gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
-					//CurrentTexture = NewGameTexture;
-					//ajouter partie de texture
-					T2.initTetro(sv);
+				
 					break;
 				case SDLK_DOWN:
-
-					for (unsigned int i = 0; i < sv.tabText.size(); i++)
-					{
-						sv.tabText[i]->render(sv.grille[LARGEUR_GRILLE / 2][1].xpos, sv.grille[LARGEUR_GRILLE / 2][1].ypos, (std::string)("Carree_Bleu.bmp"), sv);
-					}
-
-					SDL_RenderPresent(sv.gRenderer);
-					std::cout << "test" << std::endl;
-					//pareil
 					break;
 
 				}
-				/*case SDL_MOUSEBUTTONDOWN: // test sur le type d'événement click souris (enfoncé)
-										  //mouse(information, event);
-					break;
-				case SDL_MOUSEWHEEL:
-					//wheel(information, event.wheel.y);
-					break;*/
 			}
 
 		}
@@ -161,18 +149,15 @@ int main(int argc, char* argv[])
 						{
 							sv.tabText[k]->render(sv.grille[i][j].xpos, sv.grille[i][j].ypos, (std::string)("Carre_Elem.png"), sv);
 						}
+
 						else if (sv.grille[i][j].bloc == 2)
 						{
 							sv.tabText[k]->render(sv.grille[i][j].xpos, sv.grille[i][j].ypos, (std::string)("Carree_Rouge.bmp"), sv);
 						}
 					}
+
 				}
 			}
-/*
-			for (unsigned int i = 0; i < sv.tabText.size(); i++)
-			{
-				sv.tabText[i]->render(sv.grille[LARGEUR_GRILLE / 2][0].xpos, sv.grille[LARGEUR_GRILLE / 2][0].ypos, (std::string)("Carree_Bleu.bmp"), sv);
-			}*/
 
 			SDL_RenderPresent(sv.gRenderer);
 			break;
@@ -190,120 +175,10 @@ int main(int argc, char* argv[])
 
 
 	//Quit SDL subsystems
-	//Free loaded images
-	//NewGameTexture.free();
-	//BackgroundTexture.free();
-	//ScoreTexture.free();
-
-	//Quit SDL subsystems
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
 
-	//Test_Bloc();
-	//Test_Forme();
 	return 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Test texture
-/*This source code copyrighted by Lazy Foo' Productions (2004-2015)
-and may not be redistributed without written permission.*/
-/*
-//Using SDL, SDL_image, standard IO, and strings
-
-#include "Constantes.h"
-#include <stdio.h>
-#include <string>
-
-
-//The window we'll be rendering to
-SDL_Window* gWindow = NULL;
-
-//The window renderer
-SDL_Renderer* gRenderer = NULL;
-
-//Current displayed texture
-SDL_Texture* gTexture = NULL;
-
-
-int main(int argc, char* args[])
-{
-	//Create window
-	gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-	//Create renderer for window
-	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-	//Initialize renderer color
-	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-	//Initialize PNG loading
-	int imgFlags = IMG_INIT_PNG;
-	bool quit = false;
-	//The final texture
-	SDL_Texture* newTexture = NULL;
-	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load("Carree_Bleu.bmp");
-	//Create texture from surface pixels
-	gTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-	//Get rid of old loaded surface
-	SDL_FreeSurface(loadedSurface);
-	//Event handler
-	SDL_Event e;
-	//While application is running
-	while (!quit)
-	{
-		//Handle events on queue
-		while (SDL_PollEvent(&e) != 0)
-		{
-			//User requests quit
-			if (e.type == SDL_QUIT)
-			{
-				quit = true;
-			}
-		}
-		//Clear screen
-		SDL_RenderClear(gRenderer);
-		//Render texture to screen
-		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
-		//Update screen
-		SDL_RenderPresent(gRenderer);
-	}
-	//Free resources and close SDL
-	//Free loaded image
-	SDL_DestroyTexture(gTexture);
-	gTexture = NULL;
-
-	//Destroy window
-	SDL_DestroyRenderer(gRenderer);
-	SDL_DestroyWindow(gWindow);
-	gWindow = NULL;
-	gRenderer = NULL;
-
-	//Quit SDL subsystems
-	IMG_Quit();
-	SDL_Quit();
-
-	return 0;
-}*/

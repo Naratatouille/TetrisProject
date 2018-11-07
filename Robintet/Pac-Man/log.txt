@@ -1,0 +1,24 @@
+
+________PROGRAMME START________
+CreateWindow Success
+CreateRenderer Success
+TTF_Init Success
+SDL_Init Success
+_calculimage Start_
+_calculimage End_
+temps d'execution de l'initialisation : 1.943000 secondes
+_mainLoop Start_
+_mainLoop End_
+*********_________ Start DeleteAll _________*********
+Delete ground Texture name = Black.bmp Success
+Delete ground Texture name = White.bmp Success
+Delete ALL ground Texture Success
+Delete color Texture name = Red.bmp Success
+Delete color Texture name = Blue.bmp Success
+Delete color Texture name = Yellow.bmp Success
+Delete color Texture name = Green.bmp Success
+Delete color Texture name = Brown.bmp Success
+Delete ALL color Texture Success
+*********_________ End DeleteAll _________*********
+SDL_Quit Success
+________PROGRAMME FINISH________

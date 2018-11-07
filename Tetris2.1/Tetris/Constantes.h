@@ -49,7 +49,7 @@ struct StructVar{  // Structure permettant d'utiliser des variables si appelé
 
 	std::vector<std::vector<carreau>> grille;
 	std::vector<Texturer*> tabText;
-	std::vector<Tetromino*> tabForme;
+	std::vector<Tetromino> tabForme;
 
 };
 
