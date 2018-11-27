@@ -2,17 +2,15 @@
 #include "Constantes.h"
 
 
-Tetromino::Tetromino() : type(0), color(0)
+
+Tetromino::Tetromino(int _type, std::vector<carreau>& _form) : type(_type), forme(_form)
 {
 }
 
-Tetromino::Tetromino(int _type, int _color) : type(_type), color(_color)
+Tetromino::Tetromino(const Tetromino& _t) : type(_t.type)
 {
 }
 
-Tetromino::Tetromino(const Tetromino& _t) : type(_t.type), color(_t.color)
-{
-}
 
 
 Tetromino::~Tetromino()
@@ -20,119 +18,179 @@ Tetromino::~Tetromino()
 	std::cout << "destructeur Tetromino" << std::endl;
 }
 
+void Tetromino::initTabalea(std::vector<std::vector< unsigned int>>& tabTetro, std::vector<std::vector< unsigned int>>& tabTetroModify) //Création d'un tableau permettant de faire des pièces aléatoires
+{
+	std::vector<unsigned int> board;
+	for (unsigned int k = 0; k < 3; k++)
+	{
+		tabTetro.push_back(board);
+	}
+
+
+	for (unsigned int i = 0; i < 7; i++)
+	{
+		tabTetro[0].push_back(i);
+	}
+	tabTetro[1].push_back(0); // Création d'un tableau stockant 2x chaque pièces
+	tabTetro[1].push_back(0);
+	tabTetro[1].push_back(1);
+	tabTetro[1].push_back(1);
+	tabTetro[1].push_back(2);
+	tabTetro[1].push_back(2);
+	tabTetro[1].push_back(3);
+	tabTetro[1].push_back(3);
+	tabTetro[1].push_back(4);
+	tabTetro[1].push_back(4);
+	tabTetro[1].push_back(5);
+	tabTetro[1].push_back(5);
+	tabTetro[1].push_back(6);
+	tabTetro[1].push_back(6);
+
+	tabTetro[2].push_back(0); //Création d'un tableau sans S ET Z
+	tabTetro[2].push_back(1);
+	tabTetro[2].push_back(2);
+	tabTetro[2].push_back(3);
+	tabTetro[2].push_back(4);
+	//unsigned int POSITION = rand() % 6;
+
+	tabTetroModify = tabTetro;
+
+
+}
+
 void Tetromino::initTetro(StructVar& sv)				// Initialisation des différentes pièces
 {
-	carreau init;
-	for (unsigned int i = 0; i < 4; i++) 
+
+	unsigned int choicetab = rand() % sv.tabTetroModify.size();
+
+	unsigned int choiceform =rand() % sv.tabTetroModify[choicetab].size() ;
+
+	if (sv.tabTetroModify[choicetab].size() > 0)
 	{
-			forme.push_back(init);
+		sv.tabTetroModify[choicetab].erase(sv.tabTetroModify[choiceform].begin() + choiceform);
+
+		if (sv.tabTetroModify[choicetab].size() == 0)
+		{
+			sv.tabTetroModify.erase(sv.tabTetroModify.begin() + choicetab);
+		}
+		if (sv.tabTetroModify.size() == 0)
+		{
+			sv.tabTetroModify = sv.tabTetro;
+		}
 	}
-	type = rand() % 6;
-	switch (type) 
+
+	std::vector<carreau> Tetromin;
+	carreau caro;
+
+	for (unsigned int j = 0; j < 4; j++)
+	{
+		Tetromin.push_back(caro);
+	}
+	switch (sv.tabTetroModify[choicetab][choiceform]) 
 	{
 	case I:
-		forme[0].xpos = sv.grille[LARGEUR_GRILLE / 2][0].xpos;
-		forme[0].ypos = sv.grille[LARGEUR_GRILLE / 2][0].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][0].bloc = 2;								// Ligne plus importante pour affichage
-		forme[1].xpos = sv.grille[LARGEUR_GRILLE / 2][1].xpos;
-		forme[1].ypos = sv.grille[LARGEUR_GRILLE / 2][1].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][1].bloc = 2;
-		forme[2].xpos = sv.grille[LARGEUR_GRILLE / 2][2].xpos;
-		forme[2].ypos = sv.grille[LARGEUR_GRILLE / 2][2].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][2].bloc = 2;
-		forme[3].xpos = sv.grille[LARGEUR_GRILLE / 2][3].xpos;
-		forme[3].ypos = sv.grille[LARGEUR_GRILLE / 2][3].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][3].bloc = 2;
+		Tetromin[0].index_col = sv.grille[LARGEUR_GRILLE / 2][0].index_col;
+		Tetromin[0].index_ligne = sv.grille[LARGEUR_GRILLE / 2][0].index_ligne;
+										// Ligne plus importante pour affichage
+		Tetromin[1].index_col = sv.grille[LARGEUR_GRILLE / 2][1].index_col;
+		Tetromin[1].index_ligne = sv.grille[LARGEUR_GRILLE / 2][1].index_ligne;
+		
+		Tetromin[2].index_col = sv.grille[LARGEUR_GRILLE / 2][2].index_col;
+		Tetromin[2].index_ligne = sv.grille[LARGEUR_GRILLE / 2][2].index_ligne;
+	
+		Tetromin[3].index_col = sv.grille[LARGEUR_GRILLE / 2][3].index_col;
+		Tetromin[3].index_ligne = sv.grille[LARGEUR_GRILLE / 2][3].index_ligne;
+		
 		break;
 
 	case O:
-		forme[0].xpos = sv.grille[LARGEUR_GRILLE / 2][0].xpos;
-		forme[0].ypos = sv.grille[LARGEUR_GRILLE / 2][0].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][0].bloc = 2;
-		forme[1].xpos = sv.grille[LARGEUR_GRILLE / 2][1].xpos;
-		forme[1].ypos = sv.grille[LARGEUR_GRILLE / 2][1].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][1].bloc = 2;
-		forme[2].xpos = sv.grille[LARGEUR_GRILLE / 2 - 1][0].xpos;
-		forme[2].ypos = sv.grille[LARGEUR_GRILLE / 2 - 1][0].ypos;
-		sv.grille[LARGEUR_GRILLE / 2 - 1][0].bloc = 2;
-		forme[3].xpos = sv.grille[LARGEUR_GRILLE / 2 - 1][1].xpos;
-		forme[3].ypos = sv.grille[LARGEUR_GRILLE / 2 - 1][1].ypos;
-		sv.grille[LARGEUR_GRILLE / 2 - 1][1].bloc = 2;
+		Tetromin[0].index_col = sv.grille[LARGEUR_GRILLE / 2][0].index_col;
+		Tetromin[0].index_ligne = sv.grille[LARGEUR_GRILLE / 2][0].index_ligne;
+		
+		Tetromin[1].index_col = sv.grille[LARGEUR_GRILLE / 2][1].index_col;
+		Tetromin[1].index_ligne = sv.grille[LARGEUR_GRILLE / 2][1].index_ligne;
+	
+		Tetromin[2].index_col = sv.grille[LARGEUR_GRILLE / 2 - 1][0].index_col;
+		Tetromin[2].index_ligne = sv.grille[LARGEUR_GRILLE / 2 - 1][0].index_ligne;
+		
+		Tetromin[3].index_col = sv.grille[LARGEUR_GRILLE / 2 - 1][1].index_col;
+		Tetromin[3].index_ligne = sv.grille[LARGEUR_GRILLE / 2 - 1][1].index_ligne;
+
 		break;
 
 	case T:
-		forme[0].xpos = sv.grille[LARGEUR_GRILLE / 2][0].xpos;
-		forme[0].ypos = sv.grille[LARGEUR_GRILLE / 2][0].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][0].bloc = 2;
-		forme[1].xpos = sv.grille[LARGEUR_GRILLE / 2][1].xpos;
-		forme[1].ypos = sv.grille[LARGEUR_GRILLE / 2][1].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][1].bloc = 2;
-		forme[2].xpos = sv.grille[LARGEUR_GRILLE / 2][2].xpos;
-		forme[2].ypos = sv.grille[LARGEUR_GRILLE / 2][2].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][2].bloc = 2;
-		forme[3].xpos = sv.grille[LARGEUR_GRILLE / 2 - 1][1].xpos;
-		forme[3].ypos = sv.grille[LARGEUR_GRILLE / 2 - 1][1].ypos;
-		sv.grille[LARGEUR_GRILLE / 2 - 1][1].bloc = 2;
+		Tetromin[0].index_col = sv.grille[LARGEUR_GRILLE / 2][0].index_col;
+		Tetromin[0].index_ligne = sv.grille[LARGEUR_GRILLE / 2][0].index_ligne;
+	
+		Tetromin[1].index_col = sv.grille[LARGEUR_GRILLE / 2][1].index_col;
+		Tetromin[1].index_ligne = sv.grille[LARGEUR_GRILLE / 2][1].index_ligne;
+		
+		Tetromin[2].index_col = sv.grille[LARGEUR_GRILLE / 2][2].index_col;
+		Tetromin[2].index_ligne = sv.grille[LARGEUR_GRILLE / 2][2].index_ligne;
+		
+		Tetromin[3].index_col = sv.grille[LARGEUR_GRILLE / 2 - 1][1].index_col;
+		Tetromin[3].index_ligne = sv.grille[LARGEUR_GRILLE / 2 - 1][1].index_ligne;
+
 		break;
 
 	case L:
-		forme[0].xpos = sv.grille[LARGEUR_GRILLE / 2 - 1][0].xpos;
-		forme[0].ypos = sv.grille[LARGEUR_GRILLE / 2 -1][0].ypos;
-		sv.grille[LARGEUR_GRILLE / 2 - 1][0].bloc = 2;
-		forme[1].xpos = sv.grille[LARGEUR_GRILLE / 2 - 1][1].xpos;
-		forme[1].ypos = sv.grille[LARGEUR_GRILLE / 2 - 1][1].ypos;
-		sv.grille[LARGEUR_GRILLE / 2 - 1][1].bloc = 2;
-		forme[2].xpos = sv.grille[LARGEUR_GRILLE / 2][2].xpos;
-		forme[2].ypos = sv.grille[LARGEUR_GRILLE / 2][2].ypos;
-		sv.grille[LARGEUR_GRILLE / 2 - 1][2].bloc = 2;
-		forme[3].xpos = sv.grille[LARGEUR_GRILLE / 2][2].xpos;
-		forme[3].ypos = sv.grille[LARGEUR_GRILLE / 2][2].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][2].bloc = 2;
+		Tetromin[0].index_col = sv.grille[LARGEUR_GRILLE / 2 - 1][0].index_col;
+		Tetromin[0].index_ligne = sv.grille[LARGEUR_GRILLE / 2 -1][0].index_ligne;
+	
+		Tetromin[1].index_col = sv.grille[LARGEUR_GRILLE / 2 - 1][1].index_col;
+		Tetromin[1].index_ligne = sv.grille[LARGEUR_GRILLE / 2 - 1][1].index_ligne;
+	
+		Tetromin[2].index_col = sv.grille[LARGEUR_GRILLE / 2][2].index_col;
+		Tetromin[2].index_ligne = sv.grille[LARGEUR_GRILLE / 2][2].index_ligne;
+		
+		Tetromin[3].index_col = sv.grille[LARGEUR_GRILLE / 2][2].index_col;
+		Tetromin[3].index_ligne = sv.grille[LARGEUR_GRILLE / 2][2].index_ligne;
+	
 		break;
 
 	case J:
-		forme[0].xpos = sv.grille[LARGEUR_GRILLE / 2][0].xpos;
-		forme[0].ypos = sv.grille[LARGEUR_GRILLE / 2][0].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][0].bloc = 2;
-		forme[1].xpos = sv.grille[LARGEUR_GRILLE / 2][1].xpos;
-		forme[1].ypos = sv.grille[LARGEUR_GRILLE / 2][1].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][1].bloc = 2;
-		forme[2].xpos = sv.grille[LARGEUR_GRILLE / 2][2].xpos;
-		forme[2].ypos = sv.grille[LARGEUR_GRILLE / 2][2].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][2].bloc = 2;
-		forme[3].xpos = sv.grille[LARGEUR_GRILLE / 2 -  1][2].xpos;
-		forme[3].ypos = sv.grille[LARGEUR_GRILLE / 2 - 1][2].ypos;
-		sv.grille[LARGEUR_GRILLE / 2 -  1][2].bloc = 2;
+		Tetromin[0].index_col = sv.grille[LARGEUR_GRILLE / 2][0].index_col;
+		Tetromin[0].index_ligne = sv.grille[LARGEUR_GRILLE / 2][0].index_ligne;
+	
+		Tetromin[1].index_col = sv.grille[LARGEUR_GRILLE / 2][1].index_col;
+		Tetromin[1].index_ligne = sv.grille[LARGEUR_GRILLE / 2][1].index_ligne;
+	
+		Tetromin[2].index_col = sv.grille[LARGEUR_GRILLE / 2][2].index_col;
+		Tetromin[2].index_ligne = sv.grille[LARGEUR_GRILLE / 2][2].index_ligne;
+		
+		Tetromin[3].index_col = sv.grille[LARGEUR_GRILLE / 2 -  1][2].index_col;
+		Tetromin[3].index_ligne = sv.grille[LARGEUR_GRILLE / 2 - 1][2].index_ligne;
+	
 		break;
 
 	case Z:
-		forme[0].xpos = sv.grille[LARGEUR_GRILLE / 2][0].xpos;
-		forme[0].ypos = sv.grille[LARGEUR_GRILLE / 2][0].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][0].bloc = 2;
-		forme[1].xpos = sv.grille[LARGEUR_GRILLE / 2 - 1][0].xpos;
-		forme[1].ypos = sv.grille[LARGEUR_GRILLE / 2 - 1][0].ypos;
-		sv.grille[LARGEUR_GRILLE / 2 - 1][0].bloc = 2;
-		forme[2].xpos = sv.grille[LARGEUR_GRILLE / 2][1].xpos;
-		forme[2].ypos = sv.grille[LARGEUR_GRILLE / 2][1].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][1].bloc = 2;
-		forme[3].xpos = sv.grille[LARGEUR_GRILLE / 2 + 1][1].xpos;
-		forme[3].ypos = sv.grille[LARGEUR_GRILLE / 2 + 1][1].ypos;
-		sv.grille[LARGEUR_GRILLE / 2 + 1][1].bloc = 2;
+		Tetromin[0].index_col = sv.grille[LARGEUR_GRILLE / 2][0].index_col;
+		Tetromin[0].index_ligne = sv.grille[LARGEUR_GRILLE / 2][0].index_ligne;
+
+		Tetromin[1].index_col = sv.grille[LARGEUR_GRILLE / 2 - 1][0].index_col;
+		Tetromin[1].index_ligne = sv.grille[LARGEUR_GRILLE / 2 - 1][0].index_ligne;
+		
+		Tetromin[2].index_col = sv.grille[LARGEUR_GRILLE / 2][1].index_col;
+		Tetromin[2].index_ligne = sv.grille[LARGEUR_GRILLE / 2][1].index_ligne;
+	
+		Tetromin[3].index_col = sv.grille[LARGEUR_GRILLE / 2 + 1][1].index_col;
+		Tetromin[3].index_ligne = sv.grille[LARGEUR_GRILLE / 2 + 1][1].index_ligne;
+		
 		break;
 
 	case S:
-		forme[0].xpos = sv.grille[LARGEUR_GRILLE / 2][0].xpos;
-		forme[0].ypos = sv.grille[LARGEUR_GRILLE / 2][0].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][0].bloc = 2;
-		forme[1].xpos = sv.grille[LARGEUR_GRILLE / 2 + 1][0].xpos;
-		forme[1].ypos = sv.grille[LARGEUR_GRILLE / 2 + 1][0].ypos;
-		sv.grille[LARGEUR_GRILLE / 2 + 1][0].bloc = 2;
-		forme[2].xpos = sv.grille[LARGEUR_GRILLE / 2][1].xpos;
-		forme[2].ypos = sv.grille[LARGEUR_GRILLE / 2][1].ypos;
-		sv.grille[LARGEUR_GRILLE / 2][1].bloc = 2;
-		forme[3].xpos = sv.grille[LARGEUR_GRILLE / 2 - 1][1].xpos;
-		forme[3].ypos = sv.grille[LARGEUR_GRILLE / 2 - 1][1].ypos;
-		sv.grille[LARGEUR_GRILLE / 2 - 1][1].bloc = 2;
+		Tetromin[0].index_col = sv.grille[LARGEUR_GRILLE / 2][0].index_col;
+		Tetromin[0].index_ligne = sv.grille[LARGEUR_GRILLE / 2][0].index_ligne;
+		
+		Tetromin[1].index_col = sv.grille[LARGEUR_GRILLE / 2 + 1][0].index_col;
+		Tetromin[1].index_ligne = sv.grille[LARGEUR_GRILLE / 2 + 1][0].index_ligne;
+
+		Tetromin[2].index_col = sv.grille[LARGEUR_GRILLE / 2][1].index_col;
+		Tetromin[2].index_ligne = sv.grille[LARGEUR_GRILLE / 2][1].index_ligne;
+	
+		Tetromin[3].index_col = sv.grille[LARGEUR_GRILLE / 2 - 1][1].index_col;
+		Tetromin[3].index_ligne = sv.grille[LARGEUR_GRILLE / 2 - 1][1].index_ligne;
+
 		break;
 	}
 }
@@ -146,8 +204,3 @@ void Tetromino::initTetro(StructVar& sv)				// Initialisation des différentes pi
 // J = Bleu 
 // Z = Rouge 
 // S = Vert
-
-void Test_Forme()
-{
-	Tetromino T1;
-}

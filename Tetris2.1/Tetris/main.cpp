@@ -55,6 +55,7 @@ void initText(std::vector<Texturer*> &tabText, StructVar &sv)
 
 int main(int argc, char* argv[])
 {
+	srand((unsigned int)time(NULL));
 	//Initialize SDL_ttf
 	if (TTF_Init() == -1)
 	{
@@ -73,11 +74,12 @@ int main(int argc, char* argv[])
 
 	initImages(sv.tabText, sv);
 	initText(sv.tabText, sv);
+	Tetromino::initTabalea(sv.tabTetro, sv.tabTetroModify);
 
 	bool quit = false;
 	//Event handler
 	SDL_Event e;
-	Tetromino T1;
+ 
 	while (!quit) {
 
 		while (SDL_PollEvent(&e) != 0)
@@ -93,13 +95,7 @@ int main(int argc, char* argv[])
 					break;
 				case SDLK_SPACE:
 					
-					T1.initTetro(sv);
-					sv.tabForme.push_back(T1);
-
-					if (sv.tabForme.size() > 1)
-						sv.tabForme.pop_back();
-					else
-						std::cout << "j enleve" << std::endl;
+					Tetromino::initTetro(sv);
 
 
 					break;
